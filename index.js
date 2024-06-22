@@ -47,11 +47,11 @@ app.get("/api/:inputdate", (req, res) => {
   let date = new Date(inputDate);
 
   //will be NaN if input is unix time
-  if (isNaN(date.getTime())) {
-    date = new Date(inputDate * 1);
-  }
-
-  if (isNaN(date.getTime())) {
+  try {
+    if (isNaN(date.getTime())) {
+      date = new Date(inputDate * 1);
+    }
+  } catch {
     res.json({ error: "Invalid Date" });
   }
 
