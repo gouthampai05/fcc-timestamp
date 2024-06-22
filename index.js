@@ -36,7 +36,7 @@ app.get("/api", (req, res) => {
 
   res.json({
     unix: unixTime,
-    utc: `${utcDay}, ${utcDate} ${utcMonth} ${utcYear} ${utcHours}:${utcMinutes}:${utcSeconds} GMT`,
+    utc: `${utcDay}, ${utcDate} ${utcMonth} ${utcYear} ${utcHours}:${utcMinutes}:0${utcSeconds} GMT`,
   });
 });
 
@@ -47,11 +47,11 @@ app.get("/api/:inputdate", (req, res) => {
   let date = new Date(inputDate);
 
   //will be NaN if input is unix time
-  try {
-    if (isNaN(date.getTime())) {
-      date = new Date(inputDate * 1);
-    }
-  } catch {
+  if (isNaN(date.getTime())) {
+    date = new Date(inputDate * 1);
+  }
+
+  if (isNaN(date.getTime())) {
     res.json({ error: "Invalid Date" });
   }
 
